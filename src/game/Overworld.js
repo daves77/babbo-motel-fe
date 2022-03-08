@@ -1,5 +1,6 @@
 import OverworldMap from './OverworldMap';
 import map from './config';
+import DirectionInput from './DirectionInput';
 
 export default class Overworld {
   constructor(config) {
@@ -19,7 +20,10 @@ export default class Overworld {
 
       // Draw game objects
       Object.values(this.map.gameObjects).forEach((obj) => {
-        obj.x += 0.02;
+        // obj.x += 1;
+        obj.update({
+          direction: this.directionInput.direction,
+        });
         obj.sprite.draw(this.ctx);
       });
 
@@ -38,6 +42,10 @@ export default class Overworld {
       upperSrc: map.DemoRoom.upperSrc,
       gameObjects: map.DemoRoom.gameObjects,
     });
+
+    this.directionInput = new DirectionInput();
+    this.directionInput.init();
+
     this.startGameLoop();
   }
 }

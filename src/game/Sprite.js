@@ -19,8 +19,8 @@ export default class Sprite {
   }
 
   draw(ctx) {
-    const x = this.gameObject.x * 16;
-    const y = this.gameObject.y * 8 - 8;
+    const { x } = this.gameObject;
+    const y = this.gameObject.y - 8;
 
     if (this.isLoaded) {
       ctx.drawImage(
