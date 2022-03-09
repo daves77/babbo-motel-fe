@@ -15,9 +15,16 @@ const map = {
         isPlayerControlled: true,
       }),
       npc1: new Person({
-        x: utils.withGrid(1),
-        y: utils.withGrid(3),
+        x: utils.withGrid(5),
+        y: utils.withGrid(6),
         src: images.char,
+        behaviourLoop: [
+          { type: 'walk', direction: 'left' },
+          { type: 'stand', direction: 'up', time: 800 },
+          { type: 'walk', direction: 'up' },
+          { type: 'walk', direction: 'right' },
+          { type: 'walk', direction: 'down' },
+        ],
       }),
     },
     walls: {

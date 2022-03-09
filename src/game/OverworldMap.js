@@ -12,6 +12,8 @@ export default class OverworldMap {
 
     this.upperImage = new Image();
     this.upperImage.src = config.upperSrc;
+
+    this.isCutScenePlaying = false;
   }
 
   // eslint-disable-next-line no-unused-vars
@@ -38,8 +40,10 @@ export default class OverworldMap {
   }
 
   mountObjects() {
-    Object.values(this.gameObjects).forEach((obj) => {
-      obj.mount(this);
+    Object.keys(this.gameObjects).forEach((key) => {
+      const object = this.gameObjects[key];
+      object.id = key;
+      object.mount(this);
     });
   }
 

@@ -1,3 +1,4 @@
+import utils from '../utils';
 import GameObject from './GameObject';
 
 export default class Person extends GameObject {
@@ -23,26 +24,46 @@ export default class Person extends GameObject {
           direction: state.direction,
         });
       }
-      this.updateSprite(state);
+      this.updateSprite();
     }
   }
 
   startBehavior(state, behavior) {
-    this.direction = state.direction;
+    this.direction = behavior.direction;
     if (behavior.type === 'walk') {
-      const taken = state.map.isSpaceTaken(this.x, this.y, this.direction);
-
-      if (taken) return;
+      if (state.map.isSpaceTaken(this.x, this.y, this.direction)) {
+        if (behavior.retry) {
+          setTimeout(() => {
+            this.startBehavior(state, behavior);
+          }, 10);
+        }
+        return;
+      }
 
       state.map.moveWall(this.x, this.y, this.direction);
       this.movingProgressRemaining = 16;
+      this.updateSprite();
+    } else if (behavior.type === 'stand') {
+      setTimeout(() => {
+        utils.emitEvent('PersonStandComplete', {
+          whoId: this.id,
+        });
+      }, behavior.time);
     }
   }
 
   updatePosition() {
     const [property, change] = this.directionUpdate[this.direction];
+    // update x, y positioning of game object
     this[property] += change;
     this.movingProgressRemaining -= 1;
+
+    if (this.movingProgressRemaining === 0) {
+      // finished walking
+      utils.emitEvent('PersonWalkingComplete', {
+        whoId: this.id,
+      });
+    }
   }
 
   updateSprite() {

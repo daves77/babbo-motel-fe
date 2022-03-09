@@ -28,10 +28,11 @@ export default class Overworld {
       this.map.drawUpperImage(this.ctx, cameraPerson);
 
       // Draw game objects
-      Object.values(this.map.gameObjects).forEach((obj) => {
+      Object.values(this.map.gameObjects).sort((a, b) => a.y - b.y).forEach((obj) => {
         obj.sprite.draw(this.ctx, cameraPerson);
       });
 
+      // causes the looping
       requestAnimationFrame(() => {
         step();
       });
