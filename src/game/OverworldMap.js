@@ -1,8 +1,11 @@
-// import utils from '../utils';
+import utils from '../utils';
 
 export default class OverworldMap {
   constructor(config) {
     this.gameObjects = config.gameObjects;
+    this.walls = config.walls || {
+      default: 'default placeholder',
+    };
 
     this.lowerImage = new Image();
     this.lowerImage.src = config.lowerSrc;
@@ -15,10 +18,8 @@ export default class OverworldMap {
   drawLowerImage(ctx, cameraPerson) {
     ctx.drawImage(
       this.lowerImage,
-      // utils.withGrid(10) - cameraPerson.x,
-      // utils.withGrid(10) - cameraPerson.y,
-      0,
-      0,
+      utils.withGrid(10.5) - cameraPerson.x,
+      utils.withGrid(6) - cameraPerson.y,
     );
   }
 
@@ -26,11 +27,33 @@ export default class OverworldMap {
   drawUpperImage(ctx, cameraPerson) {
     ctx.drawImage(
       this.upperImage,
-      // utils.withGrid(10) - cameraPerson.x,
-      // utils.withGrid(10) - cameraPerson.y,
-      0,
-
-      0,
+      utils.withGrid(10.5) - cameraPerson.x,
+      utils.withGrid(6) - cameraPerson.y,
     );
+  }
+
+  isSpaceTaken(currentX, currentY, direction) {
+    const { x, y } = utils.nextPosition(currentX, currentY, direction);
+    return this.walls[`${x},${y}`] || false;
+  }
+
+  mountObjects() {
+    Object.values(this.gameObjects).forEach((obj) => {
+      obj.mount(this);
+    });
+  }
+
+  addWall(x, y) {
+    this.walls[`${x},${y}`] = true;
+  }
+
+  removeWall(x, y) {
+    delete this.walls[`${x},${y}`];
+  }
+
+  moveWall(wasX, wasY, direction) {
+    this.removeWall(wasX, wasY);
+    const { x, y } = utils.nextPosition(wasX, wasY, direction);
+    this.addWall(x, y);
   }
 }

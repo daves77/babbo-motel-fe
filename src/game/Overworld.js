@@ -17,9 +17,9 @@ export default class Overworld {
       const cameraPerson = this.map.gameObjects.hero;
 
       Object.values(this.map.gameObjects).forEach((obj) => {
-        // obj.x += 1;
         obj.update({
           direction: this.directionInput.direction,
+          map: this.map,
         });
       });
 
@@ -29,10 +29,6 @@ export default class Overworld {
 
       // Draw game objects
       Object.values(this.map.gameObjects).forEach((obj) => {
-        // obj.x += 1;
-        obj.update({
-          direction: this.directionInput.direction,
-        });
         obj.sprite.draw(this.ctx, cameraPerson);
       });
 
@@ -51,6 +47,8 @@ export default class Overworld {
       upperSrc: map.DemoRoom.upperSrc,
       gameObjects: map.DemoRoom.gameObjects,
     });
+
+    this.map.mountObjects();
 
     this.directionInput = new DirectionInput();
     this.directionInput.init();

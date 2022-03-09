@@ -14,29 +14,42 @@ export default class Person extends GameObject {
   }
 
   update(state) {
-    this.updatePosition();
-    this.updateSprite(state);
-    if (this.isPlayerControlled && this.movingProgressRemaining === 0 && state.direction) {
-      this.direction = state.direction;
+    if (this.movingProgressRemaining > 0) {
+      this.updatePosition();
+    } else {
+      if (this.isPlayerControlled && state.direction) {
+        this.startBehavior(state, {
+          type: 'walk',
+          direction: state.direction,
+        });
+      }
+      this.updateSprite(state);
+    }
+  }
+
+  startBehavior(state, behavior) {
+    this.direction = state.direction;
+    if (behavior.type === 'walk') {
+      const taken = state.map.isSpaceTaken(this.x, this.y, this.direction);
+
+      if (taken) return;
+
+      state.map.moveWall(this.x, this.y, this.direction);
       this.movingProgressRemaining = 16;
     }
   }
 
   updatePosition() {
-    if (this.movingProgressRemaining > 0) {
-      const [property, change] = this.directionUpdate[this.direction];
-      this[property] += change;
-      this.movingProgressRemaining -= 1;
-    }
+    const [property, change] = this.directionUpdate[this.direction];
+    this[property] += change;
+    this.movingProgressRemaining -= 1;
   }
 
-  updateSprite(state) {
-    if (this.isPlayerControlled && this.movingProgressRemaining === 0 && !state.direction) {
-      this.sprite.setAnimation(`idle-${this.direction}`);
-      return;
-    }
+  updateSprite() {
     if (this.movingProgressRemaining > 0) {
       this.sprite.setAnimation(`walk-${this.direction}`);
+      return;
     }
+    this.sprite.setAnimation(`idle-${this.direction}`);
   }
 }

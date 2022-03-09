@@ -38,7 +38,7 @@ export default class Sprite {
     this.currentAnimation = config.currentAnimation || 'idle-down';
     this.currentAnimationFrame = 0;
 
-    this.animationFrameLimit = config.animationFrameLimit || 4;
+    this.animationFrameLimit = config.animationFrameLimit || 8;
     this.animationFrameProgress = this.animationFrameLimit;
 
     this.gameObject = config.gameObject;
@@ -70,8 +70,8 @@ export default class Sprite {
 
   // eslint-disable-next-line no-unused-vars
   draw(ctx, cameraPerson) {
-    const x = this.gameObject.x - 0;
-    const y = this.gameObject.y - 6 - 16;
+    const x = this.gameObject.x + utils.withGrid(10.5) - cameraPerson.x;
+    const y = this.gameObject.y - 6 - 16 + utils.withGrid(6) - cameraPerson.y;
 
     const [frameX, frameY] = this.frame;
     if (this.isLoaded) {

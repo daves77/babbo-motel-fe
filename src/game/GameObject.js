@@ -11,6 +11,11 @@ export default class GameObject {
     });
   }
 
+  mount(map) {
+    this.isMounted = true;
+    map.addWall(this.x, this.y);
+  }
+
   // eslint-disable-next-line class-methods-use-this
   update() {
 

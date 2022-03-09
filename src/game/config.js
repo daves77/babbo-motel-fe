@@ -20,6 +20,9 @@ const map = {
         src: images.char,
       }),
     },
+    walls: {
+      [utils.asGridCoord(7, 6)]: true,
+    },
   },
 };
 
