@@ -14,9 +14,18 @@ export default class Overworld {
       // clear canvas
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
+      const cameraPerson = this.map.gameObjects.hero;
+
+      Object.values(this.map.gameObjects).forEach((obj) => {
+        // obj.x += 1;
+        obj.update({
+          direction: this.directionInput.direction,
+        });
+      });
+
       // draw map
-      this.map.drawLowerImage(this.ctx);
-      this.map.drawUpperImage(this.ctx);
+      this.map.drawLowerImage(this.ctx, cameraPerson);
+      this.map.drawUpperImage(this.ctx, cameraPerson);
 
       // Draw game objects
       Object.values(this.map.gameObjects).forEach((obj) => {
@@ -24,7 +33,7 @@ export default class Overworld {
         obj.update({
           direction: this.directionInput.direction,
         });
-        obj.sprite.draw(this.ctx);
+        obj.sprite.draw(this.ctx, cameraPerson);
       });
 
       requestAnimationFrame(() => {

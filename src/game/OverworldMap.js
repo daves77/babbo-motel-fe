@@ -1,3 +1,5 @@
+import utils from '../utils';
+
 export default class OverworldMap {
   constructor(config) {
     this.gameObjects = config.gameObjects;
@@ -9,11 +11,19 @@ export default class OverworldMap {
     this.upperImage.src = config.upperSrc;
   }
 
-  drawLowerImage(ctx) {
-    ctx.drawImage(this.lowerImage, 0, 0);
+  drawLowerImage(ctx, cameraPerson) {
+    ctx.drawImage(
+      this.lowerImage,
+      utils.withGridWidth(10) - cameraPerson.x,
+      utils.withGridHeight(10) - cameraPerson.y,
+    );
   }
 
-  drawUpperImage(ctx) {
-    ctx.drawImage(this.upperImage, 0, 0);
+  drawUpperImage(ctx, cameraPerson) {
+    ctx.drawImage(
+      this.upperImage,
+      utils.withGridWidth(10) - cameraPerson.x,
+      utils.withGridHeight(10) - cameraPerson.y,
+    );
   }
 }

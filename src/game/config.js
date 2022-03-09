@@ -14,6 +14,11 @@ const map = {
         src: images.char,
         isPlayerControlled: true,
       }),
+      npc1: new Person({
+        x: utils.withGridWidth(5),
+        y: utils.withGridHeight(6),
+        src: images.char,
+      }),
     },
   },
 };
