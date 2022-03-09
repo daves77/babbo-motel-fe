@@ -23,22 +23,22 @@ export default class Sprite {
         [1, 0],
       ],
       'walk-down': [
-        [18, 8], [19, 8], [20, 8], [21, 8], [22, 8], [23, 8],
+        [18, 4], [19, 4], [20, 4], [21, 4], [22, 4], [23, 4],
       ],
       'walk-right': [
-        [0, 8], [1, 8], [2, 8], [3, 8], [4, 8], [5, 8],
+        [0, 4], [1, 4], [2, 4], [3, 4], [4, 4], [5, 4],
       ],
       'walk-left': [
-        [12, 8], [13, 8], [14, 8], [15, 8], [16, 8], [17, 8],
+        [12, 4], [13, 4], [14, 4], [15, 4], [16, 4], [17, 4],
       ],
       'walk-up': [
-        [6, 8], [7, 8], [8, 8], [9, 8], [10, 8], [11, 8],
+        [6, 4], [7, 4], [8, 4], [9, 4], [10, 4], [11, 4],
       ],
     };
     this.currentAnimation = config.currentAnimation || 'idle-down';
     this.currentAnimationFrame = 0;
 
-    this.animationFrameLimit = config.animationFrameLimit || 8;
+    this.animationFrameLimit = config.animationFrameLimit || 4;
     this.animationFrameProgress = this.animationFrameLimit;
 
     this.gameObject = config.gameObject;
@@ -68,16 +68,17 @@ export default class Sprite {
     }
   }
 
+  // eslint-disable-next-line no-unused-vars
   draw(ctx, cameraPerson) {
-    const x = this.gameObject.x - 0 + utils.withGridWidth(10) - cameraPerson.x;
-    const y = this.gameObject.y - 6 + utils.withGridHeight(10) - cameraPerson.y;
+    const x = this.gameObject.x - 0;
+    const y = this.gameObject.y - 6 - 16;
 
     const [frameX, frameY] = this.frame;
     if (this.isLoaded) {
       ctx.drawImage(
         this.image,
-        utils.withGridWidth(frameX),
-        utils.withGridHeight(frameY),
+        utils.withGrid(frameX),
+        utils.withGrid(frameY),
         16,
         32,
         x,

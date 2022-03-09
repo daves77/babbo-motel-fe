@@ -1,4 +1,4 @@
-import utils from '../utils';
+// import utils from '../utils';
 
 export default class OverworldMap {
   constructor(config) {
@@ -11,19 +11,26 @@ export default class OverworldMap {
     this.upperImage.src = config.upperSrc;
   }
 
+  // eslint-disable-next-line no-unused-vars
   drawLowerImage(ctx, cameraPerson) {
     ctx.drawImage(
       this.lowerImage,
-      utils.withGridWidth(10) - cameraPerson.x,
-      utils.withGridHeight(10) - cameraPerson.y,
+      // utils.withGrid(10) - cameraPerson.x,
+      // utils.withGrid(10) - cameraPerson.y,
+      0,
+      0,
     );
   }
 
+  // eslint-disable-next-line no-unused-vars
   drawUpperImage(ctx, cameraPerson) {
     ctx.drawImage(
       this.upperImage,
-      utils.withGridWidth(10) - cameraPerson.x,
-      utils.withGridHeight(10) - cameraPerson.y,
+      // utils.withGrid(10) - cameraPerson.x,
+      // utils.withGrid(10) - cameraPerson.y,
+      0,
+
+      0,
     );
   }
 }

@@ -1,9 +1,7 @@
-const withGridWidth = (n) => n * 16;
-const withGridHeight = (n) => n * 8;
+const withGrid = (n) => n * 16;
 
 const utils = {
-  withGridWidth,
-  withGridHeight,
+  withGrid,
 };
 
 export default utils;
