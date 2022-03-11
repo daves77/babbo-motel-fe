@@ -14,11 +14,11 @@ export default class OverworldMapEditor {
     this.upperImage.src = config.upperSrc;
   }
 
-  drawLowerImage(ctx) {
+  drawLowerImage(ctx, cameraPerson) {
     ctx.drawImage(
       this.lowerImage,
-      0,
-      0,
+      utils.withGrid(10.5) - cameraPerson.x,
+      utils.withGrid(6) - cameraPerson.y,
     );
   }
 
@@ -27,11 +27,12 @@ export default class OverworldMapEditor {
     return this.walls[`${x},${y}`] || false;
   }
 
-  mountObjects() {
-    Object.keys(this.gameObjects).forEach((key) => {
-      const object = this.gameObjects[key];
+  mountObjects(canvas, ctx) {
+    Object.keys(this.gameObjects.furniture).forEach((key) => {
+      console.log(key);
+      const object = this.gameObjects.furniture[key];
       object.id = key;
-      object.mount(this);
+      object.mount(this, canvas, ctx);
     });
   }
 

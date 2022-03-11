@@ -1,6 +1,8 @@
+import utils from '../../utils';
 import Overworld from '../Overworld';
 import OverworldMapEditor from './OverworldMapEditor';
 import map from './config';
+import DirectionInput from '../DirectionInput';
 
 export default class OverworldEditor extends Overworld {
   constructor(config) {
@@ -8,14 +10,22 @@ export default class OverworldEditor extends Overworld {
     this.placeholder = true;
   }
 
-  startGameLoop() {
+  renderObjects() {
     const step = () => {
+      console.log('called');
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-      this.map.drawLowerImage(this.ctx);
+      const centerPosition = { x: utils.withGrid(5), y: utils.withGrid(5) };
 
-      requestAnimationFrame(() => {
-        step();
+      this.map.drawLowerImage(this.ctx, centerPosition);
+
+      const gameObjects = [
+        ...Object.values(this.map.gameObjects.furniture),
+      ];
+      // Draw game objects
+      // sorting objects based on their position on the y axis so that they appear layered
+      gameObjects.sort((a, b) => a.y - b.y).forEach((obj) => {
+        obj.sprite.draw(this.ctx, centerPosition);
       });
     };
 
@@ -26,8 +36,17 @@ export default class OverworldEditor extends Overworld {
     this.map = new OverworldMapEditor({
       lowerSrc: map.EditorRoom.lowerSrc,
       gameObjects: map.EditorRoom.gameObjects,
+      walls: map.EditorRoom.walls,
     });
 
-    this.startGameLoop();
+    console.log(this.canvas, this.ctx);
+    this.map.mountObjects(this.canvas, this.ctx);
+
+    this.directionInput = new DirectionInput();
+    this.directionInput.init();
+
+    setTimeout(() => {
+      this.renderObjects();
+    }, 100);
   }
 }

@@ -15,7 +15,7 @@ export default function GameEditor() {
   });
 
   return (
-    <div className="h-[198px] w-[352px] relative outline-dotted outline-1 outline-gray-600 m-auto mt-4 scale-[2] translate-y-2/4">
+    <div className="h-[198px] w-[352px] relative outline-dotted outline-1 outline-gray-600 m-auto mt-4 scale-[2] translate-y-3/4">
       <canvas ref={canvasRef} height="198px" width="352" style={{ imageRendering: 'pixelated' }} />
     </div>
   );

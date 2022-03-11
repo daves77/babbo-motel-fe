@@ -28,9 +28,14 @@ export default class Overworld {
       this.map.drawLowerImage(this.ctx, cameraPerson);
       this.map.drawUpperImage(this.ctx, cameraPerson);
 
+      const gameObjects = [
+        ...Object.values(this.map.gameObjects.furniture),
+        ...Object.values(this.map.gameObjects.person),
+      ];
+
       // Draw game objects
       // sorting objects based on their position on the y axis so that they appear layered
-      Object.values(this.map.gameObjects.person).sort((a, b) => a.y - b.y).forEach((obj) => {
+      gameObjects.sort((a, b) => a.y - b.y).forEach((obj) => {
         obj.sprite.draw(this.ctx, cameraPerson);
       });
 
@@ -51,7 +56,6 @@ export default class Overworld {
 
   init() {
     // loading image base
-    console.log(map.DemoRoom.walls);
     this.map = new OverworldMap({
       lowerSrc: map.DemoRoom.lowerSrc,
       upperSrc: map.DemoRoom.upperSrc,

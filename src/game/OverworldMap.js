@@ -41,10 +41,15 @@ export default class OverworldMap {
   }
 
   mountObjects() {
-    console.log(this.gameObjects);
     Object.keys(this.gameObjects.person).forEach((key) => {
       console.log(key);
       const object = this.gameObjects.person[key];
+      object.id = key;
+      object.mount(this);
+    });
+    Object.keys(this.gameObjects.furniture).forEach((key) => {
+      console.log(key);
+      const object = this.gameObjects.furniture[key];
       object.id = key;
       object.mount(this);
     });
