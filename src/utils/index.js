@@ -29,6 +29,8 @@ const drawWallLineCoord = (firstCoord, secondCoord) => {
   return walls;
 };
 
+const roundDownGrid = (position) => position - (position % 16);
+
 const nextPosition = (initialX, initialY, direction) => {
   let x = initialX;
   let y = initialY;
@@ -68,6 +70,7 @@ const utils = {
   emitEvent,
   getOppositeDirection,
   drawWallLineCoord,
+  roundDownGrid,
 };
 
 export default utils;

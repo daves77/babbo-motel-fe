@@ -3,6 +3,7 @@ import Overworld from '../Overworld';
 import OverworldMapEditor from './OverworldMapEditor';
 import map from './config';
 import DirectionInput from '../DirectionInput';
+import DragListener from './DragListener';
 
 export default class OverworldEditor extends Overworld {
   constructor(config) {
@@ -44,6 +45,14 @@ export default class OverworldEditor extends Overworld {
 
     this.directionInput = new DirectionInput();
     this.directionInput.init();
+
+    this.dragListener = new DragListener({
+      overworld: this,
+      canvas: this.canvas,
+      ctx: this.ctx,
+      furniture: map.EditorRoom.gameObjects.furniture,
+    });
+    this.dragListener.init();
 
     setTimeout(() => {
       this.renderObjects();

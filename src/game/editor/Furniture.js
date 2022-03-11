@@ -1,6 +1,5 @@
 import GameObject from '../GameObject';
 import Sprite from '../Sprite';
-import DragListener from './DragListener';
 
 export default class Furniture extends GameObject {
   constructor(config) {
@@ -15,17 +14,9 @@ export default class Furniture extends GameObject {
     });
   }
 
-  mount(map, overworld, canvas, ctx) {
+  mount(map) {
     console.log('mounts');
     // TODO: needa loop through the dimensions
-    this.dragListener = new DragListener({
-      overworld,
-      canvas,
-      ctx,
-      object: this,
-    });
-    console.log(this.dragListener);
-    this.dragListener.init();
 
     map.addWall(this.x, this.y);
   }

@@ -6,24 +6,27 @@ export default class DragListener {
     this.overworld = config.overworld;
     this.canvas = config.canvas;
     this.ctx = config.ctx;
-    this.object = config.object;
+    this.furniture = config.furniture;
 
     this.draggable = false;
-    this.currentX = 0;
-    this.currentY = 0;
+    this.object = null;
   }
 
   mousedown(e) {
-    this.currentX = e.offsetX - (utils.withGrid(10.5) - utils.withGrid(5));
-    this.currentY = e.offsetY - (utils.withGrid(6) - utils.withGrid(5));
+    const currentX = e.offsetX - (utils.withGrid(10.5) - utils.withGrid(5));
+    const currentY = e.offsetY - (utils.withGrid(6) - utils.withGrid(5));
+
+    const match = Object.values(this.furniture).find((obj) => currentX >= obj.x
+        && currentX <= obj.x + utils.withGrid(obj.space.x)
+        && currentY >= obj.y
+        && currentY <= obj.y + utils.withGrid(obj.space.y));
+
     if (
-      this.currentX <= this.object.x + utils.withGrid(this.object.space.x)
-        && this.currentX >= this.object.x
-        && this.currentY <= this.object.y + utils.withGrid(this.object.space.y)
-        && this.currentY >= this.object.y
+      match
     ) {
+      console.log(match);
       this.draggable = true;
-      console.log('clicked img');
+      this.object = match;
     } else {
       console.log('didnt click');
     }
@@ -36,14 +39,14 @@ export default class DragListener {
 
     this.canvas.onmousemove = (e) => {
       if (this.draggable) {
-        this.currentX = e.offsetX - (utils.withGrid(10.5) - utils.withGrid(5));
-        this.currentY = e.offsetY - (utils.withGrid(6) - utils.withGrid(5));
+        const currentX = e.offsetX - (utils.withGrid(10.5) - utils.withGrid(5));
+        const currentY = e.offsetY - (utils.withGrid(6) - utils.withGrid(5));
 
         // util to snap to closest 16px grid
 
         // update furniture position
-        this.object.x = this.currentX - (this.currentX % 16);
-        this.object.y = this.currentY - (this.currentY % 16);
+        this.object.x = currentX - (currentX % 16);
+        this.object.y = currentY - (currentY % 16);
 
         this.overworld.renderObjects();
       }
@@ -51,6 +54,7 @@ export default class DragListener {
 
     this.canvas.onmouseup = () => {
       this.draggable = false;
+      this.object = null;
     };
   }
 }
