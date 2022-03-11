@@ -41,8 +41,10 @@ export default class OverworldMap {
   }
 
   mountObjects() {
-    Object.keys(this.gameObjects).forEach((key) => {
-      const object = this.gameObjects[key];
+    console.log(this.gameObjects);
+    Object.keys(this.gameObjects.person).forEach((key) => {
+      console.log(key);
+      const object = this.gameObjects.person[key];
       object.id = key;
       object.mount(this);
     });
@@ -64,13 +66,13 @@ export default class OverworldMap {
 
     this.isCutScenePlaying = false;
 
-    Object.values(this.gameObjects).forEach((obj) => obj.playBehaviourEvent(this));
+    Object.values(this.gameObjects.person).forEach((obj) => obj.playBehaviourEvent(this));
   }
 
   checkForActionCutscene() {
-    const { hero } = this.gameObjects;
+    const { hero } = this.gameObjects.person;
     const nextCoords = utils.nextPosition(hero.x, hero.y, hero.direction);
-    const match = Object.values(this.gameObjects).find((object) => `${object.x},${object.y}` === `${nextCoords.x},${nextCoords.y}`);
+    const match = Object.values(this.gameObjects.person).find((object) => `${object.x},${object.y}` === `${nextCoords.x},${nextCoords.y}`);
 
     if (!this.isCutScenePlaying && match && match.talking.length) {
       this.startCutScene(match.talking[0].events);

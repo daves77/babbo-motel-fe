@@ -1,7 +1,7 @@
 import utils from '../utils';
-import GameObject from './GameObject';
+import CharacterObject from './CharacterObject';
 
-export default class Person extends GameObject {
+export default class Person extends CharacterObject {
   constructor(config) {
     super(config);
     this.movingProgressRemaining = 0;

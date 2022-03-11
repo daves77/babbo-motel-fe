@@ -7,6 +7,8 @@ export default class Sprite {
     this.image.onload = () => {
       this.isLoaded = true;
     };
+    this.dimensions = config.dimensions || { x: 1, y: 2 };
+    // width, length (default person sprite height)
 
     // initiail state and animation config
     this.animations = config.animations || {
@@ -35,6 +37,7 @@ export default class Sprite {
         [6, 4], [7, 4], [8, 4], [9, 4], [10, 4], [11, 4],
       ],
     };
+
     this.currentAnimation = config.currentAnimation || 'idle-down';
     this.currentAnimationFrame = 0;
 
@@ -79,12 +82,12 @@ export default class Sprite {
         this.image,
         utils.withGrid(frameX),
         utils.withGrid(frameY),
-        16,
-        32,
+        utils.withGrid(this.dimensions.x),
+        utils.withGrid(this.dimensions.y),
         x,
         y,
-        16,
-        32,
+        utils.withGrid(this.dimensions.x),
+        utils.withGrid(this.dimensions.y),
       );
     }
     this.updateAnimationProgress();

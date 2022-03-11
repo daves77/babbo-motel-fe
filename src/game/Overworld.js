@@ -15,9 +15,9 @@ export default class Overworld {
       // clear canvas
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-      const cameraPerson = this.map.gameObjects.hero;
+      const cameraPerson = this.map.gameObjects.person.hero;
 
-      Object.values(this.map.gameObjects).forEach((obj) => {
+      Object.values(this.map.gameObjects.person).forEach((obj) => {
         obj.update({
           direction: this.directionInput.direction,
           map: this.map,
@@ -30,7 +30,7 @@ export default class Overworld {
 
       // Draw game objects
       // sorting objects based on their position on the y axis so that they appear layered
-      Object.values(this.map.gameObjects).sort((a, b) => a.y - b.y).forEach((obj) => {
+      Object.values(this.map.gameObjects.person).sort((a, b) => a.y - b.y).forEach((obj) => {
         obj.sprite.draw(this.ctx, cameraPerson);
       });
 

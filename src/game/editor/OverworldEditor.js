@@ -1,6 +1,6 @@
 import Overworld from '../Overworld';
 import OverworldMapEditor from './OverworldMapEditor';
-import map from '../config';
+import map from './config';
 
 export default class OverworldEditor extends Overworld {
   constructor(config) {
@@ -29,9 +29,5 @@ export default class OverworldEditor extends Overworld {
     });
 
     this.startGameLoop();
-
-    document.addEventListener('mousemove', (e) => {
-      console.log(e);
-    });
   }
 }

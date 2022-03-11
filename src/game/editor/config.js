@@ -1,7 +1,8 @@
 import images from '../../assets';
-// import GameObject from './GameObject';
+// import CharacterObject from './CharacterObject';
 import utils from '../../utils';
 import Person from '../Person';
+// import Furniture from './Furniture';
 
 const map = {
   EditorRoom: {
@@ -14,6 +15,17 @@ const map = {
         src: images.char,
         isPlayerControlled: true,
       }),
+
+      // table: new Furniture({
+      //   x: utils.withGrid(5),
+      //   y: utils.withGrid(6),
+      //   src: images.General,
+      //   animations: {
+      //     'idle-down': [
+      //       [4, 11],
+      //     ],
+      //   },
+      // }),
 
     },
     walls: {

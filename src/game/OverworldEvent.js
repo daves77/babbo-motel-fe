@@ -8,7 +8,7 @@ export default class OverworldEvent {
   }
 
   stand(resolve) {
-    const who = this.map.gameObjects[this.event.who];
+    const who = this.map.gameObjects.person[this.event.who];
     who.startBehavior({
       map: this.map,
     }, {
@@ -28,7 +28,7 @@ export default class OverworldEvent {
   }
 
   walk(resolve) {
-    const who = this.map.gameObjects[this.event.who];
+    const who = this.map.gameObjects.person[this.event.who];
     who.startBehavior({
       map: this.map,
     }, {
@@ -49,8 +49,8 @@ export default class OverworldEvent {
 
   textMessage(resolve) {
     if (this.event.faceHero) {
-      const obj = this.map.gameObjects[this.event.faceHero];
-      obj.direction = utils.getOppositeDirection(this.map.gameObjects.hero.direction);
+      const obj = this.map.gameObjects.person[this.event.faceHero];
+      obj.direction = utils.getOppositeDirection(this.map.gameObjects.person.hero.direction);
     }
 
     const message = new TextMessage({
