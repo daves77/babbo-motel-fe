@@ -1,6 +1,6 @@
-import Overworld from './Overworld';
-import OverworldMap from './OverworldMap';
-import map from './config';
+import Overworld from '../Overworld';
+import OverworldMapEditor from './OverworldMapEditor';
+import map from '../config';
 
 export default class OverworldEditor extends Overworld {
   constructor(config) {
@@ -10,7 +10,6 @@ export default class OverworldEditor extends Overworld {
 
   startGameLoop() {
     const step = () => {
-      console.log('mounting');
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
       this.map.drawLowerImage(this.ctx);
@@ -24,11 +23,15 @@ export default class OverworldEditor extends Overworld {
   }
 
   init() {
-    this.map = new OverworldMap({
+    this.map = new OverworldMapEditor({
       lowerSrc: map.EditorRoom.lowerSrc,
       gameObjects: map.EditorRoom.gameObjects,
     });
 
     this.startGameLoop();
+
+    document.addEventListener('mousemove', (e) => {
+      console.log(e);
+    });
   }
 }

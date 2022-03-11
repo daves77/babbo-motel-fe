@@ -2,6 +2,33 @@ const withGrid = (n) => n * 16;
 
 const asGridCoord = (x, y) => `${withGrid(x)},${withGrid(y)}`;
 
+// can only do straight lines
+const drawWallLineCoord = (firstCoord, secondCoord) => {
+  const [firstX, firstY] = firstCoord;
+  const [secondX, secondY] = secondCoord;
+  const walls = {};
+
+  if (firstX === secondX) {
+    // vertical
+    const offsetY = firstY - secondY;
+    for (let i = 0; i < Math.abs(offsetY); i += 1) {
+      const y = offsetY > 0 ? firstY - i : firstY + i;
+      walls[`${withGrid(firstX)},${withGrid(y)}`] = true;
+    }
+  } else if (firstY === secondY) {
+    // horizontal
+    const offsetX = firstX - secondX;
+    console.log(offsetX);
+    for (let i = 0; i < Math.abs(offsetX); i += 1) {
+      const x = offsetX > 0 ? firstX - i : firstX + i;
+      walls[`${withGrid(x)},${withGrid(firstY)}`] = true;
+    }
+  } else {
+    console.log('not a straight line');
+  }
+  return walls;
+};
+
 const nextPosition = (initialX, initialY, direction) => {
   let x = initialX;
   let y = initialY;
@@ -40,6 +67,7 @@ const utils = {
   nextPosition,
   emitEvent,
   getOppositeDirection,
+  drawWallLineCoord,
 };
 
 export default utils;

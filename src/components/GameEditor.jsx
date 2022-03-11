@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 
-import OverworldEditor from '../game/OverworldEditor';
+import OverworldEditor from '../game/editor/OverworldEditor';
 import images from '../assets';
 
 export default function GameEditor() {

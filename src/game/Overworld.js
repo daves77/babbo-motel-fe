@@ -51,9 +51,11 @@ export default class Overworld {
 
   init() {
     // loading image base
+    console.log(map.DemoRoom.walls);
     this.map = new OverworldMap({
       lowerSrc: map.DemoRoom.lowerSrc,
       upperSrc: map.DemoRoom.upperSrc,
+      walls: map.DemoRoom.walls,
       gameObjects: map.DemoRoom.gameObjects,
     });
 
