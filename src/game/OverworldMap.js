@@ -1,4 +1,5 @@
 import utils from '../utils';
+import OverworldEvent from './OverworldEvent';
 
 export default class OverworldMap {
   constructor(config) {
@@ -45,6 +46,35 @@ export default class OverworldMap {
       object.id = key;
       object.mount(this);
     });
+  }
+
+  async startCutScene(events) {
+    this.isCutScenePlaying = true;
+
+    // loop through the event cutscene
+    for (let i = 0; i < events.length; i += 1) {
+      const eventHandler = new OverworldEvent({
+        event: events[i],
+        map: this,
+      });
+
+      // eslint-disable-next-line no-await-in-loop
+      await eventHandler.init();
+    }
+
+    this.isCutScenePlaying = false;
+
+    Object.values(this.gameObjects).forEach((obj) => obj.playBehaviourEvent(this));
+  }
+
+  checkForActionCutscene() {
+    const { hero } = this.gameObjects;
+    const nextCoords = utils.nextPosition(hero.x, hero.y, hero.direction);
+    const match = Object.values(this.gameObjects).find((object) => `${object.x},${object.y}` === `${nextCoords.x},${nextCoords.y}`);
+
+    if (!this.isCutScenePlaying && match && match.talking.length) {
+      this.startCutScene(match.talking[0].events);
+    }
   }
 
   addWall(x, y) {

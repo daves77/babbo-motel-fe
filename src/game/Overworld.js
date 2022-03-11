@@ -1,6 +1,7 @@
 import OverworldMap from './OverworldMap';
 import map from './config';
 import DirectionInput from './DirectionInput';
+import KeyPressListener from './KeypressListener';
 
 export default class Overworld {
   constructor(config) {
@@ -28,6 +29,7 @@ export default class Overworld {
       this.map.drawUpperImage(this.ctx, cameraPerson);
 
       // Draw game objects
+      // sorting objects based on their position on the y axis so that they appear layered
       Object.values(this.map.gameObjects).sort((a, b) => a.y - b.y).forEach((obj) => {
         obj.sprite.draw(this.ctx, cameraPerson);
       });
@@ -39,6 +41,12 @@ export default class Overworld {
     };
 
     step();
+  }
+
+  bindActionInput() {
+    this.interactionHandler = new KeyPressListener('Enter', () => {
+      this.map.checkForActionCutscene();
+    });
   }
 
   init() {
@@ -54,6 +62,19 @@ export default class Overworld {
     this.directionInput = new DirectionInput();
     this.directionInput.init();
 
+    this.bindActionInput();
+
     this.startGameLoop();
+
+    // this.map.startCutScene([
+    //   { type: 'textMessage', text: 'this is a test' },
+    //   // { who: 'hero', direction: 'down', type: 'walk' },
+    //   // { who: 'hero', direction: 'down', type: 'walk' },
+    //   // { who: 'hero', direction: 'down', type: 'walk' },
+    //   // { who: 'hero', direction: 'down', type: 'walk' },
+    //   // { who: 'npc1', direction: 'down', type: 'walk' },
+    //   // { who: 'npc1', direction: 'down', type: 'walk' },
+
+    // ]);
   }
 }

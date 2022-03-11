@@ -5,6 +5,7 @@ export default class Person extends GameObject {
   constructor(config) {
     super(config);
     this.movingProgressRemaining = 0;
+    this.isStanding = false;
     this.isPlayerControlled = config.isPlayerControlled || false;
     this.directionUpdate = {
       up: ['y', -1],
@@ -18,7 +19,7 @@ export default class Person extends GameObject {
     if (this.movingProgressRemaining > 0) {
       this.updatePosition();
     } else {
-      if (this.isPlayerControlled && state.direction) {
+      if (!state.map.isCutScenePlaying && this.isPlayerControlled && state.direction) {
         this.startBehavior(state, {
           type: 'walk',
           direction: state.direction,
@@ -44,11 +45,13 @@ export default class Person extends GameObject {
       this.movingProgressRemaining = 16;
       this.updateSprite();
     } else if (behavior.type === 'stand') {
+      this.isStanding = true;
       setTimeout(() => {
         utils.emitEvent('PersonStandComplete', {
           whoId: this.id,
         });
       }, behavior.time);
+      this.isStanding = false;
     }
   }
 

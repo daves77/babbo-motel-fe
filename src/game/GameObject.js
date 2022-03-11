@@ -14,6 +14,8 @@ export default class GameObject {
 
     this.behaviourLoop = config.behaviourLoop || [];
     this.behaviourLoopFrame = 0;
+
+    this.talking = config.talking || [];
   }
 
   mount(map) {
@@ -26,7 +28,7 @@ export default class GameObject {
   }
 
   async playBehaviourEvent(map) {
-    if (map.isCutScenePlaying || this.behaviourLoop.length === 0) {
+    if (map.isCutScenePlaying || this.behaviourLoop.length === 0 || this.isStanding) {
       return;
     }
 

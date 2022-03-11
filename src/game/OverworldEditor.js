@@ -1,0 +1,34 @@
+import Overworld from './Overworld';
+import OverworldMap from './OverworldMap';
+import map from './config';
+
+export default class OverworldEditor extends Overworld {
+  constructor(config) {
+    super(config);
+    this.placeholder = true;
+  }
+
+  startGameLoop() {
+    const step = () => {
+      console.log('mounting');
+      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+      this.map.drawLowerImage(this.ctx);
+
+      requestAnimationFrame(() => {
+        step();
+      });
+    };
+
+    step();
+  }
+
+  init() {
+    this.map = new OverworldMap({
+      lowerSrc: map.EditorRoom.lowerSrc,
+      gameObjects: map.EditorRoom.gameObjects,
+    });
+
+    this.startGameLoop();
+  }
+}
