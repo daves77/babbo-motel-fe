@@ -27,12 +27,12 @@ export default class OverworldMapEditor {
     return this.walls[`${x},${y}`] || false;
   }
 
-  mountObjects(canvas, ctx) {
+  mountObjects(overworld, canvas, ctx) {
     Object.keys(this.gameObjects.furniture).forEach((key) => {
       console.log(key);
       const object = this.gameObjects.furniture[key];
       object.id = key;
-      object.mount(this, canvas, ctx);
+      object.mount(this, overworld, canvas, ctx);
     });
   }
 

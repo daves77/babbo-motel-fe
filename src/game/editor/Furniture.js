@@ -13,17 +13,18 @@ export default class Furniture extends GameObject {
       dimensions: this.dimensions,
       animations: config.animations,
     });
-    this.dragListener = null;
   }
 
-  mount(map, canvas, ctx) {
+  mount(map, overworld, canvas, ctx) {
+    console.log('mounts');
     // TODO: needa loop through the dimensions
     this.dragListener = new DragListener({
+      overworld,
       canvas,
       ctx,
       object: this,
     });
-
+    console.log(this.dragListener);
     this.dragListener.init();
 
     map.addWall(this.x, this.y);

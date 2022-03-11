@@ -35,16 +35,7 @@ const map = {
         }),
       },
       furniture: {
-        chair: new Furniture({
-          x: utils.withGrid(6),
-          y: utils.withGrid(8),
-          src: images.General,
-          animations: {
-            'idle-down': [
-              [4, 11],
-            ],
-          },
-        }),
+
         table: new Furniture({
           x: utils.withGrid(7),
           y: utils.withGrid(8),
@@ -56,6 +47,16 @@ const map = {
           },
           dimensions: { x: 2, y: 2 },
           space: { x: 2, y: 1 },
+        }),
+        chair: new Furniture({
+          x: utils.withGrid(6),
+          y: utils.withGrid(8),
+          src: images.General,
+          animations: {
+            'idle-down': [
+              [4, 11],
+            ],
+          },
         }),
       },
 

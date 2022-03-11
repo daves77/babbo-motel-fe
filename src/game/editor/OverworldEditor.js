@@ -40,7 +40,7 @@ export default class OverworldEditor extends Overworld {
     });
 
     console.log(this.canvas, this.ctx);
-    this.map.mountObjects(this.canvas, this.ctx);
+    this.map.mountObjects(this, this.canvas, this.ctx);
 
     this.directionInput = new DirectionInput();
     this.directionInput.init();
